@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drifting Game</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div class="button-container">
+    <button id="createCheckpoints">Create Checkpoints</button>
+    <button id="saveCheckpoints" style="display: none;">Save Checkpoints</button>
+    <div id="lapCount">Laps: 0</div>
+  </div>
+</body>
+</html>
+
+
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .button-container {
+    display: flex;
+  }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.js"></script>
+<script src="/car.js"></script>
+<script src="/logic.js"></script>
