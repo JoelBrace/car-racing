@@ -16,7 +16,7 @@ var countdownInterval;
 function preload() {
   redFiestaImg = loadImage('red-fiesta.png');
   yellowFiestaImg = loadImage('yellow-fiesta.png');
-  backgroundImg = loadImage('racetrack.png')
+  backgroundImg = loadImage('racetrack-2.jpg')
 }
 
 document.getElementById('createCheckpoints').addEventListener('click', () => {
@@ -94,7 +94,7 @@ function checkCheckpoints() {
   if (currentCheckpointIndex < checkpoints.length) {
     let checkpoint = checkpoints[currentCheckpointIndex];
     let d = dist(myCar.d.x, myCar.d.y, checkpoint.x, checkpoint.y);
-    if (d < 20) {
+    if (d < 40) {
       collectedCheckpoints++;
       currentCheckpointIndex++; // Move to the next checkpoint
       if (currentCheckpointIndex === checkpoints.length) {
@@ -155,7 +155,7 @@ function displayCheckpoints() {
     } else {
       fill(255, 0, 0);
     }
-    ellipse(checkpoint.x, checkpoint.y, 15, 15);
+    ellipse(checkpoint.x, checkpoint.y, 20, 20);
   }
 }
 
