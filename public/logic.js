@@ -172,6 +172,7 @@ function mousePressed() {
 }
 
 function displayCheckpoints() {
+  stroke(0);
   fill(255, 0, 0);
   for (let i = 0; i < checkpoints.length; i++) {
     let checkpoint = checkpoints[i];
