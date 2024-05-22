@@ -16,8 +16,8 @@ io.on('connection', (socket) => {
 
   // Initialize a car for each new connection
   cars[socket.id] = {
-    x: 250, // You might want to randomize this
-    y: 500, // You might want to randomize this
+    x: 50, // You might want to randomize this
+    y: 50, // You might want to randomize this
     angle: 0
   };
 
@@ -26,6 +26,10 @@ io.on('connection', (socket) => {
 
   // Update all users when a new car is added
   socket.broadcast.emit('newCar', { id: socket.id, car: cars[socket.id] });
+
+  socket.on('restartGamePressed', () => {
+    socket.broadcast.emit('restartGame');
+  });
 
   socket.on('disconnect', () => {
     console.log('User disconnected:', socket.id);

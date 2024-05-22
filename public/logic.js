@@ -33,6 +33,22 @@ document.getElementById('saveCheckpoints').addEventListener('click', () => {
   document.getElementById('createCheckpoints').style.display = 'block';
 });
 
+document.getElementById('resetGame').addEventListener('click', () => {
+  restartGame();
+  socket.emit('restartGamePressed');
+});
+
+function restartGame() {
+  if(myCar && checkpoints.length != 0)
+    {
+      myCar.d.x = checkpoints[0].x;
+      myCar.d.y = checkpoints[0].y;
+      setCarAngleToCheckpoint();
+      lapCount = 0;
+      startCountdown();
+    }
+}
+
 function setup() {
   createCanvas(backgroundImg.width, backgroundImg.height);
   frameRate(60);
@@ -46,6 +62,10 @@ function sendCarData(car)
     angle: car.angle
   };
 }
+
+socket.on('restartGame', () => {
+  restartGame();
+});
 
 socket.on('init', (data) => {
   myCar = new Car(data.init_loc.x, data.init_loc.y, data.init_loc.angle);
@@ -175,8 +195,8 @@ function startCountdown() {
 
 function displayCountdown() {
   if (countdown > 0) {
-    textSize(32);
-    fill(255);
+    textSize(64);
+    fill(0);
     textAlign(CENTER, CENTER);
     text(countdown, width / 2, height / 2);
   }
@@ -209,7 +229,6 @@ function displayLapCount() {
 function draw() {
   imageMode(CORNER);
   background(backgroundImg);
-  displayCheckpoints();
   checkCheckpoints();
   displayLapCount();
   moveClientCar();
@@ -217,6 +236,8 @@ function draw() {
     if(key == myCarId) return;
     drawCar(car.x, car.y, car.angle, yellowFiestaImg);
   });
+  displayCheckpoints();
+
 
   displayCountdown();
 }
