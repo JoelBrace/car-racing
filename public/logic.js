@@ -47,6 +47,8 @@ function restartGame() {
       setCarAngleToCheckpoint();
       lapCount = 0;
       startCountdown();
+      collectedCheckpoints = 0;
+      currentCheckpointIndex = 0;
     }
 }
 
@@ -240,7 +242,7 @@ function drawAndUpdateMarks()
     fill(50, mark.opacity);
     noStroke();
     ellipse(mark.x, mark.y, 10, 5);
-    mark.opacity -= 1;
+    mark.opacity -= 0.75;
     if (mark.opacity <= 0) {
       tireMarks.splice(i, 1); // Remove mark when it's fully transparent
     }

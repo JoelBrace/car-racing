@@ -70,6 +70,13 @@ class Car {
       } else {
         this.steerAngle = 0;
       }
+
+      if(keyIsDown(DOWN_ARROW))
+        {
+          console.log(this.steerAngle)
+          this.steerAngle = this.steerAngle*-1;
+        }
+
     } else {
       this.steerAngle = 0;
     }
