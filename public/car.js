@@ -6,7 +6,7 @@ class Car {
     this.turnRate = this.turnRateStatic;   // initialise turn-rate
     this.gripStatic = 2;                   // sliding friction while gripping
     this.gripDynamic = 0.8;                // sliding friction while drifting
-    this.DRIFT_CONSTANT = 1;               // sets the x-velocity threshold for no-drift <=> drift. Lower = drift sooner
+    this.DRIFT_CONSTANT = 1.1;               // sets the x-velocity threshold for no-drift <=> drift. Lower = drift sooner
 
     this.controllable = controllable;
 
@@ -48,7 +48,6 @@ class Car {
   }
 
   update() {
-    console.log(this.isDrifting);
     // Add input forces
     if (keyIsPressed && this.controllable) {
       // ACCELERATING (BODY-FIXED to WORLD)

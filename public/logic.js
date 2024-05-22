@@ -12,6 +12,7 @@ var yellowFiestaImg;
 var backgroundImg;
 var countdown = 0;
 var countdownInterval;
+var tireMarks = []; // Array to store tire marks
 
 function preload() {
   redFiestaImg = loadImage('red-fiesta.png');
@@ -148,16 +149,20 @@ function moveClientCar() {
     myCar.v.y = 0;
   }
 
+  if (myCar.isDrifting) {
+    tireMarks.push({ x: myCar.d.x, y: myCar.d.y, opacity: 255 });
+  }
 
   socket.emit('moveCar', sendCarData(myCar));
 }
 
-
 function drawCar(x, y, angle, carImg = redFiestaImg) {
-    imageMode(CENTER);
-    push(); translate(x, y); rotate(angle);
-    image(carImg, 0, 0, 50, 50);
-    pop();
+  imageMode(CENTER);
+  push();
+  translate(x, y);
+  rotate(angle);
+  image(carImg, 0, 0, 50, 50);
+  pop();
 }
 
 function mousePressed() {
@@ -218,7 +223,7 @@ function setCarAngleToCheckpoint() {
 
   // Set the car's angle
   if (myCar) {
-    myCar.angle = angle-1.5708;
+    myCar.angle = angle - 1.5708;
   }
 }
 
@@ -226,18 +231,32 @@ function displayLapCount() {
   document.getElementById('lapCount').innerText = 'Laps: ' + lapCount;
 }
 
+function drawAndUpdateMarks()
+{
+  // Draw and update tire marks
+  for (let i = tireMarks.length - 1; i >= 0; i--) {
+    let mark = tireMarks[i];
+    fill(50, mark.opacity);
+    noStroke();
+    ellipse(mark.x, mark.y, 10, 5);
+    mark.opacity -= 1;
+    if (mark.opacity <= 0) {
+      tireMarks.splice(i, 1); // Remove mark when it's fully transparent
+    }
+  }
+}
+
 function draw() {
   imageMode(CORNER);
   background(backgroundImg);
   checkCheckpoints();
   displayLapCount();
+  drawAndUpdateMarks();
   moveClientCar();
   Object.entries(cars).forEach(([key, car]) => {
-    if(key == myCarId) return;
+    if (key == myCarId) return;
     drawCar(car.x, car.y, car.angle, yellowFiestaImg);
   });
   displayCheckpoints();
-
-
   displayCountdown();
 }
